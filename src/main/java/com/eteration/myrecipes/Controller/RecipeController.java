@@ -1,6 +1,6 @@
 package com.eteration.myrecipes.Controller;
 
-import com.eteration.myrecipes.Dto.UserDto;
+import com.eteration.myrecipes.Dto.RecipeDto;
 import com.eteration.myrecipes.Entity.Recipe;
 import com.eteration.myrecipes.Service.Abstract.RecipeService;
 import org.modelmapper.ModelMapper;
@@ -25,45 +25,45 @@ public class RecipeController {
     }
 
     @GetMapping
-    public List<UserDto> getAllUsers() {
-        return recipeService.getAllRecipes().stream().map(recipe -> modelMapper.map(recipe, UserDto.class))
+    public List<RecipeDto> getAllRecipes() {
+        return recipeService.getAllRecipes().stream().map(recipe -> modelMapper.map(recipe, RecipeDto.class))
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{recipeId")
-    public ResponseEntity<UserDto> getUserById(Integer recipeId) {
+    @GetMapping("/{recipeId}")
+    public ResponseEntity<RecipeDto> getRecipeById(@PathVariable Integer recipeId) {
         Recipe recipe = recipeService.getRecipeById(recipeId);
-        UserDto recipeResponse = modelMapper.map(recipe, UserDto.class);
+        RecipeDto recipeResponse = modelMapper.map(recipe, RecipeDto.class);
 
         return ResponseEntity.ok().body(recipeResponse);
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto recipeDto) {
+    public ResponseEntity<RecipeDto> createRecipe(@RequestBody RecipeDto recipeDto) {
 
         Recipe recipeRequest = modelMapper.map(recipeDto, Recipe.class);
         Recipe recipe = recipeService.createRecipe(recipeRequest);
 
-        UserDto recipeResponse = modelMapper.map(recipe, UserDto.class);
+        RecipeDto recipeResponse = modelMapper.map(recipe, RecipeDto.class);
 
-        return new ResponseEntity<UserDto>(recipeResponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(recipeResponse, HttpStatus.CREATED);
     }
 
     @PutMapping("/{recipeId}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Integer recipeId, @RequestBody UserDto recipeDto) {
+    public ResponseEntity<RecipeDto> updateRecipe(@PathVariable Integer recipeId, @RequestBody RecipeDto recipeDto) {
 
         Recipe recipeRequest = modelMapper.map(recipeDto, Recipe.class);
 
         Recipe recipe = recipeService.updateRecipe(recipeId, recipeRequest);
 
         // entity to DTO
-        UserDto recipeResponse = modelMapper.map(recipe, UserDto.class);
+        RecipeDto recipeResponse = modelMapper.map(recipe, RecipeDto.class);
 
         return ResponseEntity.ok().body(recipeResponse);
     }
 
     @DeleteMapping("/{recipeId}")
-    public ResponseEntity<Integer> deleteRecipe(Integer recipeId) {
+    public ResponseEntity<Integer> deleteRecipe(@PathVariable Integer recipeId) {
         return ResponseEntity.ok(recipeId);
     }
 }

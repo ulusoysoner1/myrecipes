@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Recipe {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "recipe_id")
     private Integer recipeId;
     @Column(name = "title")
@@ -23,8 +23,9 @@ public class Recipe {
     private Integer cookingDegree;
     @Column(name = "image")
     private String image;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user",referencedColumnName = "user_id")
     public User user;
 
     public Recipe() {

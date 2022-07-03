@@ -8,18 +8,18 @@ import java.util.Objects;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "comment_id")
     private Integer commentId;
     @Column(name = "title")
     private String title;
     @Column(name = "text")
     private String text;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "c_recipes_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "c_recipes_id", referencedColumnName = "recipe_id")
     private Recipe recipe;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "c_users_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "c_users_id", referencedColumnName = "user_id")
     private User user;
 
     public Comment() {
@@ -81,7 +81,7 @@ public class Comment {
         if (this == o) return true;
         if (!(o instanceof Comment)) return false;
         Comment comment = (Comment) o;
-        return getCommentId().equals(comment.getCommentId()) && getTitle().equals(comment.getTitle()) && getText().equals(comment.getText()) && Objects.equals(getRecipe(), comment.getRecipe()) && Objects.equals(getUser(), comment.getUser());
+        return getCommentId().equals(comment.getCommentId()) && Objects.equals(getTitle(), comment.getTitle()) && Objects.equals(getText(), comment.getText()) && Objects.equals(getRecipe(), comment.getRecipe()) && Objects.equals(getUser(), comment.getUser());
     }
 
     @Override

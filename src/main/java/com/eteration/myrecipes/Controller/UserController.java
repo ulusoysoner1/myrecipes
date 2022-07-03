@@ -30,8 +30,8 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{userId")
-    public ResponseEntity<UserDto> getUserById(Integer userId) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable Integer userId) {
         User user = userService.getUserById(userId);
         UserDto userResponse = modelMapper.map(user, UserDto.class);
 
@@ -46,10 +46,10 @@ public class UserController {
 
         UserDto userResponse = modelMapper.map(user, UserDto.class);
 
-        return new ResponseEntity<UserDto>(userResponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{userId}")
     public ResponseEntity<UserDto> updateUser(@PathVariable Integer userId, @RequestBody UserDto userDto) {
 
         User userRequest = modelMapper.map(userDto, User.class);

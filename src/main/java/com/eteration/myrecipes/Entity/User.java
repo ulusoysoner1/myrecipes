@@ -8,7 +8,7 @@ import java.util.Objects;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private Integer userId;
     @Column(name = "username")
@@ -76,5 +76,13 @@ public class User {
         return Objects.hash(getUserId(), getUsername(), getPassword(), getEmail());
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

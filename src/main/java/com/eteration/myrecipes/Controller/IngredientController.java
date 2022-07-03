@@ -25,13 +25,13 @@ public class IngredientController {
     }
 
     @GetMapping
-    public List<IngredientDto> getAllUsers() {
+    public List<IngredientDto> getAllIngredients() {
         return ingredientService.getAllIngredient().stream().map(ingredient -> modelMapper.map(ingredient, IngredientDto.class))
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{ingId")
-    public ResponseEntity<IngredientDto> getUserById(Integer ingId) {
+    @GetMapping("/{ingId}")
+    public ResponseEntity<IngredientDto> getIngredientById(@PathVariable Integer ingId) {
         Ingredient ingredient = ingredientService.getIngredientById(ingId);
         IngredientDto ingredientResponse = modelMapper.map(ingredient, IngredientDto.class);
 
@@ -39,18 +39,18 @@ public class IngredientController {
     }
 
     @PostMapping
-    public ResponseEntity<IngredientDto> createUser(@RequestBody IngredientDto ingredientDto) {
+    public ResponseEntity<IngredientDto> createIngredient(@RequestBody IngredientDto ingredientDto) {
 
         Ingredient ingredientRequest = modelMapper.map(ingredientDto, Ingredient.class);
         Ingredient ingredient = ingredientService.createIngredient(ingredientRequest);
 
         IngredientDto ingredientResponse = modelMapper.map(ingredient, IngredientDto.class);
 
-        return new ResponseEntity<IngredientDto>(ingredientResponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(ingredientResponse, HttpStatus.CREATED);
     }
 
     @PutMapping("/{ingId}")
-    public ResponseEntity<IngredientDto> updateUser(@PathVariable Integer ingId, @RequestBody IngredientDto ingredientDto) {
+    public ResponseEntity<IngredientDto> updateIngredient(@PathVariable Integer ingId, @RequestBody IngredientDto ingredientDto) {
 
         Ingredient ingredientRequest = modelMapper.map(ingredientDto, Ingredient.class);
 
@@ -60,5 +60,10 @@ public class IngredientController {
         IngredientDto ingredientResponse = modelMapper.map(ingredient, IngredientDto.class);
 
         return ResponseEntity.ok().body(ingredientResponse);
+    }
+
+    @DeleteMapping("/{ingId}")
+    public ResponseEntity<Integer> deleteIngredient(@PathVariable Integer ingredientId) {
+        return ResponseEntity.ok(ingredientId);
     }
 }

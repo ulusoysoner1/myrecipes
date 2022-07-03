@@ -4,13 +4,13 @@ import com.eteration.myrecipes.Entity.Comment;
 import com.eteration.myrecipes.Exception.CommentNotFoundException;
 import com.eteration.myrecipes.Repository.CommentRepository;
 import com.eteration.myrecipes.Service.Abstract.CommentService;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
+
 
     private final CommentRepository commentRepository;
 
@@ -29,7 +29,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment updateComment(Integer commentId, @NotNull Comment commentRequest) {
+    public Comment updateComment(Integer commentId, Comment commentRequest) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new CommentNotFoundException(commentId));
         comment.setTitle(commentRequest.getTitle());

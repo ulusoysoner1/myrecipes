@@ -9,21 +9,20 @@ import java.util.Objects;
 public class Ingredient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ing_id")
     private Integer ingId;
     @Column(name = "description")
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "recipes_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipes_id", referencedColumnName = "recipe_id")
     private Recipe recipe;
 
     public Ingredient() {
     }
 
     public Ingredient(String description, Recipe recipe) {
-        super();
         this.description = description;
         this.recipe = recipe;
     }
@@ -61,12 +60,12 @@ public class Ingredient {
         if (this == o) return true;
         if (!(o instanceof Ingredient)) return false;
         Ingredient that = (Ingredient) o;
-        return ingId.equals(that.ingId) && Objects.equals(getDescription(), that.getDescription()) && Objects.equals(getRecipe(), that.getRecipe());
+        return getIngId().equals(that.getIngId()) && Objects.equals(getDescription(), that.getDescription()) && Objects.equals(getRecipe(), that.getRecipe());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ingId, getDescription(), getRecipe());
+        return Objects.hash(getIngId(), getDescription(), getRecipe());
     }
 
     @Override

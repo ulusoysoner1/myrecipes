@@ -16,17 +16,17 @@ public class RecipeServiceImpl implements RecipeService {
         this.recipeRepository = recipeRepository;
     }
 
-
+    @Override
     public List<Recipe> getAllRecipes() {
         return recipeRepository.findAll();
     }
 
-
+    @Override
     public Recipe createRecipe(Recipe recipe) {
         return recipeRepository.save(recipe);
     }
 
-
+    @Override
     public Recipe updateRecipe(Integer recipeId, Recipe recipeRequest) {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new RecipeNotFoundException(recipeId));
@@ -41,16 +41,17 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeRepository.save(recipe);
     }
 
+    @Override
     public void deleteRecipe(Integer recipeId) {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new RecipeNotFoundException(recipeId));
         recipeRepository.delete(recipe);
     }
 
+    @Override
     public Recipe getRecipeById(Integer recipeId) {
-        Recipe recipe = recipeRepository.findById(recipeId)
+        return recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new RecipeNotFoundException(recipeId));
-        return recipe;
     }
 
 }

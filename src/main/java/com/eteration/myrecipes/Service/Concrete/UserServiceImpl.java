@@ -4,11 +4,12 @@ import com.eteration.myrecipes.Entity.User;
 import com.eteration.myrecipes.Exception.UserNotFoundException;
 import com.eteration.myrecipes.Repository.UserRepository;
 import com.eteration.myrecipes.Service.Abstract.UserService;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RestController
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(Integer userId, @NotNull User userRequest) {
+    public User updateUser(Integer userId, User userRequest) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
         user.setUsername(userRequest.getUsername());

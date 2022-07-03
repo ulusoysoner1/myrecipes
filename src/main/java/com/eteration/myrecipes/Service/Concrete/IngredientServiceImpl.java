@@ -14,7 +14,6 @@ public class IngredientServiceImpl implements IngredientService {
     private final IngredientRepository ingredientRepository;
 
     public IngredientServiceImpl(IngredientRepository ingredientRepository) {
-        super();
         this.ingredientRepository = ingredientRepository;
     }
 
@@ -46,9 +45,8 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredient getIngredientById(Integer ingId) {
-        Ingredient ingredient = ingredientRepository.findById(ingId)
+        return ingredientRepository.findById(ingId)
                 .orElseThrow(() -> new IngredientNotFoundException(ingId));
-        return ingredient;
 
     }
 }
